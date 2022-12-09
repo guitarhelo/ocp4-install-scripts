@@ -1,0 +1,72 @@
+#sample for create custom iso
+rd.neednet=1
+coreos.inst.install_dev=/dev/sda
+coreos.inst.ignition_url=http://10.39.0.244:8080/master.ign
+ip=10.39.0.245::10.39.0.254:255.255.255.0:tsczocpuatmaster01.ocp4uat.trinasolar.com:ens192:none
+nameserver=10.32.140.170
+nameserver=10.40.2.230
+
+coreos-installer iso customize rhos-live.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=10.39.0.245::10.39.0.254:255.255.255.0:boostrap.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://10.39.0.244:8080/master.ign" \
+--live-karg-append="nameserver=10.32.140.170" \
+--live-karg-append="nameserver=10.40.2.230"
+
+
+#for bootstrap
+
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.183::192.168.151.254:255.255.255.0:bootstrap.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/bootstrap.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+--live-karg-append="nameserver=114.114.114.114" \
+-o bootstrap.iso
+#for master1
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.178::192.168.151.254:255.255.255.0:master1.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/master.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+-o master1.iso
+#for master2
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.179::192.168.151.254:255.255.255.0:master2.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/master.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+-o master2.iso
+
+#for master3
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.180::192.168.151.254:255.255.255.0:master3.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/master.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+-o master3.iso
+
+#for worker1
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.181::192.168.151.254:255.255.255.0:worker1.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/worker.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+-o worker1.iso
+
+
+#for worker2
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.182::192.168.151.254:255.255.255.0:worker2.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/worker.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+-o worker2.iso
+
+#for worker3
+coreos-installer iso customize rhcos-live.x86_64.iso \
+--live-karg-append="rd.neednet=1" --live-karg-append="coreos.inst.install_dev=/dev/sda" \
+--live-karg-append="ip=192.168.151.183::192.168.151.254:255.255.255.0:worker3.ocp4.ewell.cc:ens192:none" \
+--live-karg-append="coreos.inst.ignition_url=http://192.168.150.232:90/ign/worker.ign" \
+--live-karg-append="nameserver=192.168.150.232" \
+-o worker3.iso

@@ -1,0 +1,79 @@
+#!/bin/bash
+cat > install-config.yaml.temp <<EOF
+apiVersion: v1
+baseDomain: example.com
+compute:
+  - hyperthreading: Enabled
+    name: worker
+    replicas: 0
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+metadata:
+  name: ocp4
+networking:
+  clusterNetwork:
+    - cidr: 10.128.0.0/14
+      hostPrefix: 23
+  networkType: OpenShiftSDN
+  serviceNetwork:
+    - 172.30.0.0/16
+platform:
+  none: {}
+fips: false
+pullSecret: >-
+  { "auths": { "cloud.openshift.com": { "auth":
+  "b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K29jbV9hY2Nlc3NfOTk1ZDYwMjZlYzdjNDRjNGIzNzg0MjI1OWRkNjJmYTA6WVlNWTFIUEJYUlFBQ0kxUTNNMjY4ODhNWkY4T1U5Nk1XM1lMOFVRVFhTSEMxOUJSQTVBRlBVQk9VOEZQVlFCSw==",
+  "email": "jingping.pan@ibm.com" }, "quay.io": { "auth":
+  "b3BlbnNoaWZ0LXJlbGVhc2UtZGV2K29jbV9hY2Nlc3NfOTk1ZDYwMjZlYzdjNDRjNGIzNzg0MjI1OWRkNjJmYTA6WVlNWTFIUEJYUlFBQ0kxUTNNMjY4ODhNWkY4T1U5Nk1XM1lMOFVRVFhTSEMxOUJSQTVBRlBVQk9VOEZQVlFCSw==",
+  "email": "jingping.pan@ibm.com" }, "registry.connect.redhat.com": { "auth":
+  "fHVoYy1wb29sLTZhNDAzYTAxLWQ5ODctNDQ5MC1hODE3LWU1Y2UyMTU1ZmQ1ZTpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmlPR0V4WlRWalpqRTRNR0UwWkdNeVlUYzNaRFpqTkRSaVpEaGpZVEl3WkNKOS52eHVoOUpDaVRPa3BnelJLcEx6LXYyaXIydTdOVk5jWHFRWGZweUZjRFgxbzRjVWRDenc2cXNRWDFwTEZ6bkszQzdkZ2pZRHpFWnFKWTVJMngzYm1WOUVpZkRnTnFVYndfRjYxQmhMWFhpMXZUbmpBcGtISUZBWkI1NEhMZ0U4X0pWTmtQaVdXU0l2RVMtZDYybjZjbnBmaFRtUXEtZDk3Z1lOUzVhOVJxYk1ab0JyWU5acjdIOUxYX2NoNjRscnR6cGtEQ3pBSFJmSGVacjU1NHNLdVlkOEIwakdFeFJuZkFOeHJ1WW9uNkYyTl84N0VxWEpUMndPUlNCeFlmLXNIYkluR2t1UlpQYkJaZFczaUc1TjRmN0daS0Jwd3FpdmdCUWlaWkV3WmFYVmJDYjJjWHREZHFBa1Vzd3Z2NE5WSEVjbkxHQjdCMXBMbWNWTlZSRGpOLW1tem1qUkhGcXVfRmo0bU1JWXI0T0pMN1BTcWpnUXdxM0FOMmM0V09EeUt6cHA4cTZ6ZHhZTzNUNllaWTAzekQ4Q0k5TmdFd2RMQ29nREdKd0tHNUVIbDFPVmh3MTRhSjJtbG5sajg0cXR6M2hzV3g4Sm5jTTFudW1CWDBReWMwd3RfMkIwcnlyR0MtcVpPV3JaVzlTRmltTGZPdThIVHo1VFpsSW1QRFY4M2tTS3V2d1pXV1N2aDkxblFuYXNqeF94ZnNpM0NaWUFlcnc2RGhMZklJRjlOV2VmS0EzcnB4TW41OGE3WkNNQXZqMVpuU1J4emU5OHZvWlNnY2VuX2VXRktFY016anJrMmF0T2FDTThhOXpMMDBPOHpOSDFuRjFTOG0ySmlyRTBvbnBzdXNqbTFmM1Riemp1QjYyZjEyUFViMl95bVByUHFSV20xTUFNbWhhdw==",
+  "email": "jingping.pan@ibm.com" }, "registry.redhat.io": { "auth":
+  "fHVoYy1wb29sLTZhNDAzYTAxLWQ5ODctNDQ5MC1hODE3LWU1Y2UyMTU1ZmQ1ZTpleUpoYkdjaU9pSlNVelV4TWlKOS5leUp6ZFdJaU9pSmlPR0V4WlRWalpqRTRNR0UwWkdNeVlUYzNaRFpqTkRSaVpEaGpZVEl3WkNKOS52eHVoOUpDaVRPa3BnelJLcEx6LXYyaXIydTdOVk5jWHFRWGZweUZjRFgxbzRjVWRDenc2cXNRWDFwTEZ6bkszQzdkZ2pZRHpFWnFKWTVJMngzYm1WOUVpZkRnTnFVYndfRjYxQmhMWFhpMXZUbmpBcGtISUZBWkI1NEhMZ0U4X0pWTmtQaVdXU0l2RVMtZDYybjZjbnBmaFRtUXEtZDk3Z1lOUzVhOVJxYk1ab0JyWU5acjdIOUxYX2NoNjRscnR6cGtEQ3pBSFJmSGVacjU1NHNLdVlkOEIwakdFeFJuZkFOeHJ1WW9uNkYyTl84N0VxWEpUMndPUlNCeFlmLXNIYkluR2t1UlpQYkJaZFczaUc1TjRmN0daS0Jwd3FpdmdCUWlaWkV3WmFYVmJDYjJjWHREZHFBa1Vzd3Z2NE5WSEVjbkxHQjdCMXBMbWNWTlZSRGpOLW1tem1qUkhGcXVfRmo0bU1JWXI0T0pMN1BTcWpnUXdxM0FOMmM0V09EeUt6cHA4cTZ6ZHhZTzNUNllaWTAzekQ4Q0k5TmdFd2RMQ29nREdKd0tHNUVIbDFPVmh3MTRhSjJtbG5sajg0cXR6M2hzV3g4Sm5jTTFudW1CWDBReWMwd3RfMkIwcnlyR0MtcVpPV3JaVzlTRmltTGZPdThIVHo1VFpsSW1QRFY4M2tTS3V2d1pXV1N2aDkxblFuYXNqeF94ZnNpM0NaWUFlcnc2RGhMZklJRjlOV2VmS0EzcnB4TW41OGE3WkNNQXZqMVpuU1J4emU5OHZvWlNnY2VuX2VXRktFY016anJrMmF0T2FDTThhOXpMMDBPOHpOSDFuRjFTOG0ySmlyRTBvbnBzdXNqbTFmM1Riemp1QjYyZjEyUFViMl95bVByUHFSV20xTUFNbWhhdw==",
+  "email": "jingping.pan@ibm.com" }, "registry.ocp4.example.com:8443":{
+  "auth":"am9objpQYXNzQDIwMTQ=", "email":"" } } }
+sshKey: |
+  '$( cat ~/.ssh/id_rsa.pub )'
+imageContentSources:
+  - mirrors:
+      - 'registry.ocp4.example.com:5000/ocp4/openshift4'
+    source: quay.io/openshift-release-dev/ocp-release
+  - mirrors:
+      - 'registry.ocp4.example.com:5000/ocp4/openshift4'
+    source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
+additionalTrustBundle: >-
+  -----BEGIN CERTIFICATE-----
+  MIIF1TCCA72gAwIBAgIUY8iNcrG8tgEVzrvWNA/kY+ZxAukwDQYJKoZIhvcNAQEN
+  BQAwejELMAkGA1UEBhMCQ04xEDAOBgNVBAgMB0JlaWppbmcxEDAOBgNVBAcMB0Jl
+  aWppbmcxEDAOBgNVBAoMB2V4YW1wbGUxETAPBgNVBAsMCFBlcnNvbmFsMSIwIAYD
+  VQQDDBlyZWdpc3RyeS5vY3A0LmV4YW1wbGUuY29tMB4XDTIyMDkwMzA1NTExMloX
+  DTMyMDgzMTA1NTExMlowejELMAkGA1UEBhMCQ04xEDAOBgNVBAgMB0JlaWppbmcx
+  EDAOBgNVBAcMB0JlaWppbmcxEDAOBgNVBAoMB2V4YW1wbGUxETAPBgNVBAsMCFBl
+  cnNvbmFsMSIwIAYDVQQDDBlyZWdpc3RyeS5vY3A0LmV4YW1wbGUuY29tMIICIjAN
+  BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEApxfA85f4PFMOj13y+LQJXhDytskL
+  dIfg8N2w/dP+IoczzNaQQ4ZfBiH7R8hUm8noJoZUx5/XjHIYblXJiZRx1xVS/eUP
+  jDBYTgunCz5sNqXpEfh8i3ldE2nXK4TxsEumooLm3odTvXBIphJYh0xd+7yIApES
+  4xxwnQMI10mcgOhd38Vr+9c8ivWYR1hxYHhKrKgK0XIdwE6Y9iQa23Z66vSYsTH+
+  38jH4UIKuJjTDCZGW8lxbNx4g8aw4o3LnVEiHI8ilTYz9JYJSrakhO94HsbhTrdV
+  jN4gZnuhZsdqKLJbjQfCL2TLMWhgjOpLHMVeQQPKqeGAFQaBUctr66FPquS+21R8
+  XLwNjmpfXLt12HFJI12am29uKzwyNSv17LwCy7v9uKELUjSWfZZVIAJZC7RQUWsl
+  0HAing5I0uS73nNTuO/Z++HzNVOu/XvtJ3KLKCqdN+sM7EExSYnPgwLu7sET9gQH
+  PQ2DYyuUyFYbMlubTnZhrTCou+m4glehRLBPJvSSh/bCqVK0BuLIKO6BEBz/DHoK
+  oJRKeyUSB3sYfevvrkopEaXKakVd2ZjbvxMAkObkfsxjyzX3W16/miaQM+9vwwE1
+  66T5WgfbLAi4J4NoKhTS581tyGguFSc4M1Wx6Gl3t2PjU5/z5rf93iiNcvZLCIAx
+  KWS4UhydfvzY2RECAwEAAaNTMFEwHQYDVR0OBBYEFDKzSiCE+ikNPciOIxJbYVr5
+  qZmWMB8GA1UdIwQYMBaAFDKzSiCE+ikNPciOIxJbYVr5qZmWMA8GA1UdEwEB/wQF
+  MAMBAf8wDQYJKoZIhvcNAQENBQADggIBAEwbcIfp3CnVLX5vCXOWj6MHTovovLDt
+  lCCknQ4m3/ZVmnNePb0rPK3FP5yGZaIqeCzcEgN4HFobVL+p/lo8ZVu7uu94LZIA
+  f9Ih2ipVl+70KGl7wY8J4MvVs7NWfMIQBn52w7dfHqTNHwL2HFsBFF9cEeBlprKT
+  5jS7r2lqgWItOo9rd2+kJfzQYVzxAw3g6xqcgCTrZjM725sJX0pAObX/+IK9/fTM
+  FeWqE+imQWX7BqMOWrB2ljcAtJvCT2edu66dFGVIiSqd+6UDZKulv1Lug62FthWc
+  C5qXFSrM1n1pC21bX6bH7nrWa3kxXZEKQpQpVDdwgo/2ZHwXPvbwp74wSxjh/3d/
+  mKPWq9Gp/ydH5v0/MhsQv13PwWRsMKBTR9cDZDaa9yLoaNTalz8plfukLqG1gkoS
+  BEGunnG9SEEIka4nqhNRtBdME8A5wHALLFgsxsdpNbOVb9KANIjckTBMP54XuOc0
+  qpUaoDKVravVeAMsfmzmo6uW9SrtKWkn95NO6oyTvw7xSrT+DO8FREHmrsNZOt6m
+  Lm4GuOgX7/HJ6Ix0HGspJy4JIBAmYjF7mztOPEQVnIRcpyJnhFdFsE7oTWc+ZoQy
+  kWVuy8PQzfJU5WfoxUycrxf/SsMGMrIAv6nFSiebJ2s7AaGvf/3B+A9Puu76HqI4 iHcGfpIJJpDa
+  -----END CERTIFICATE-----
+EOF
